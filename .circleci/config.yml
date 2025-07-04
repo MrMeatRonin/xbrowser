@@ -42,7 +42,6 @@ jobs:
           name: Cache cargo (rust packages)
           paths:
             - ~/.cargo
-            - ./node_modules
           key: v1-cargo-cache
       - store_artifacts:
           path: ./src-tauri/target/release/bundle/deb
