@@ -5,11 +5,9 @@ jobs:
       - image: cimg/rust:1.88.0-node  # Rust + Node.js preinstalled
     steps:
       - checkout
-
       - restore_cache:
         keys:
           - apt-pkgs-{{ checksum ".circleci/config.yml" }}
-
       - run:
           name: Install system dependencies (Debian)
           command: |
@@ -24,21 +22,17 @@ jobs:
               libayatana-appindicator3-dev \
               librsvg2-dev \
               xdg-utils
-
       - save_cache:
         paths:
           - /var/lib/apt/lists/*
           - /var/cache/apt/archives/*.deb
         key: apt-pkgs-{{ checksum ".circleci/config.yml" }}
-
       - run:
           name: Install frontend dependencies
           command: npm install  # or pnpm install / yarn
-
       - run:
           name: Build Tauri app
           command: npm run tauri build  # or your custom build command
-		  
       - store_artifacts:
           path: ./src-tauri/target/release
           destination: release
