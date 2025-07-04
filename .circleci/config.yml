@@ -6,8 +6,8 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-        keys:
-          - apt-pkgs-{{ checksum ".circleci/config.yml" }}
+          keys:
+            - apt-pkgs-{{ checksum ".circleci/config.yml" }}
       - run:
           name: Install system dependencies (Debian)
           command: |
@@ -23,10 +23,10 @@ jobs:
               librsvg2-dev \
               xdg-utils
       - save_cache:
-        paths:
-          - /var/lib/apt/lists/*
-          - /var/cache/apt/archives/*.deb
-        key: apt-pkgs-{{ checksum ".circleci/config.yml" }}
+          paths:
+            - /var/lib/apt/lists/*
+            - /var/cache/apt/archives/*.deb
+          key: apt-pkgs-{{ checksum ".circleci/config.yml" }}
       - run:
           name: Install frontend dependencies
           command: npm install  # or pnpm install / yarn
