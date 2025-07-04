@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/rust:latest-node  # Rust + Node.js preinstalled
+      - image: cimg/rust:1.88.0-node  # Rust + Node.js preinstalled
     steps:
       - checkout
       - run:
