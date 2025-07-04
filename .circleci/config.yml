@@ -20,25 +20,36 @@ jobs:
               librsvg2-dev \
               xdg-utils
       - restore_cache:
+          name: Restore node_modules
           keys:
-            - v1-cargo-cache-{{ checksum ".circleci/config.yml" }}
+            - v1-npm-cache-{{ checksum "package.json" }}
       - run:
           name: Install frontend dependencies
           command: npm install  # or pnpm install / yarn
+      - save_cache:
+          name: Cache node_modules 
+          paths:
+            - ./node_modules
+          key: - v1-npm-cache-{{ checksum "package.json" }}
+      - restore_cache:
+          name: Restore cargo (rust packages)
+          keys:
+            - v1-cargo-cache
       - run:
           name: Build Tauri app
           command: npm run tauri build  # or your custom build command
       - save_cache:
+          name: Cache cargo (rust packages)
           paths:
             - ~/.cargo
             - ./node_modules
-          key: v1-cargo-cache-{{ checksum ".circleci/config.yml" }}
+          key: v1-cargo-cache
       - store_artifacts:
-          path: ./src-tauri/target/release/bundle/deb/*.deb
+          path: ./src-tauri/target/release/bundle/deb
           destination: deb
       - store_artifacts:
-          path: ./src-tauri/target/release/bundle/rpm/*.rpm
+          path: ./src-tauri/target/release/bundle/rpm
           destination: rpm
       - store_artifacts:
-          path: ./src-tauri/target/release/bundle/appimage/*.AppImage
+          path: ./src-tauri/target/release/bundle/appimage
           destination: appimage
