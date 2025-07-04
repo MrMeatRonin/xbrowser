@@ -34,5 +34,11 @@ jobs:
             - ./node_modules
           key: v1-cargo-cache-{{ checksum ".circleci/config.yml" }}
       - store_artifacts:
-          path: ./src-tauri/target/release/bundle/deb
-          destination: release
+          path: ./src-tauri/target/release/bundle/deb/*.deb
+          destination: deb
+      - store_artifacts:
+          path: ./src-tauri/target/release/bundle/rpm/*.rpm
+          destination: rpm
+      - store_artifacts:
+          path: ./src-tauri/target/release/bundle/appimage/*.AppImage
+          destination: appimage
