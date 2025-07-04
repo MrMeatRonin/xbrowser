@@ -34,5 +34,5 @@ jobs:
           name: Build Tauri app
           command: npm run tauri build  # or your custom build command
       - store_artifacts:
-          path: ./src-tauri/target/release
+          path: ./src-tauri/target/release/bundle
           destination: release
