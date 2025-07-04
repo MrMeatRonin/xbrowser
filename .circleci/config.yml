@@ -22,7 +22,7 @@ jobs:
       - restore_cache:
           name: Restore node_modules
           keys:
-            - v1-npm-cache-{{ checksum "package.json" }}
+            - v1-npm-cache-{{ checksum "./package.json" }}
       - run:
           name: Install frontend dependencies
           command: npm install  # or pnpm install / yarn
@@ -30,7 +30,7 @@ jobs:
           name: Cache node_modules 
           paths:
             - ./node_modules
-          key: - v1-npm-cache-{{ checksum "package.json" }}
+          key: - v1-npm-cache-{{ checksum "./package.json" }}
       - restore_cache:
           name: Restore cargo (rust packages)
           keys:
